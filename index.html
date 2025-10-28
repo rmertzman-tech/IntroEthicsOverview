@@ -1,376 +1,1952 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Architecture of Ethical Reasoning</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- 
-    Chosen Palette: Professional Indigo & Slate
-    Application Structure Plan: A thematic SPA divided into five core sections that mirror the essay's logical flow but are presented for interactive exploration. 1) Introduction with a "Gaming Discovery" hook. 2) A section detailing the Personal Reality Framework (PRF). 3) A deep dive into the "Three Universal Coordination Principles." 4) An interactive "Ethical Logic Toolkit" where users can explore ATL, STIT, and Coalition Logic. 5) A capstone "Ethical Cartography" simulation where users apply the entire framework to the AI Ethics case study. This structure guides the user from the foundational discovery to practical application, making the framework a usable tool rather than just a theoretical text.
-    Visualization & Content Choices: Report Info: Gaming Discovery Data -> Goal: Show evidence -> Viz: Bar Chart -> Interaction: Hover to see data points. -> Justification: The bar chart makes the performance advantages of diverse teams immediately apparent and impactful. -> Library: Chart.js. Report Info: PRF Components -> Goal: Explain -> Viz: Clickable cards -> Interaction: Click reveals details of each component (B, R, O, A+, C) and the UEV. Report Info: ATCF Components -> Goal: Explain measurement -> Viz: Doughnut Chart -> Interaction: Hover for component descriptions -> Justification: A doughnut chart is a good way to show a whole composed of parts (the ATCF score). -> Library: Chart.js. Report Info: Logical Tools -> Goal: Explain -> Viz: Tabbed interface for ATL, STIT, Coalition Logic -> Interaction: User clicks tabs to switch between explanations of the logical tools. Report Info: AI Ethics Case Study -> Goal: Simulate -> Viz: Step-by-step interactive workflow -> Interaction: User clicks through the 6 steps of the Ethical Cartography process, seeing how each tool is applied to generate a robust solution. This makes the abstract process concrete and actionable.
-    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
-    -->
+    <title>Ethics as Capability Development - Course Framework</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9; /* slate-100 */
-            color: #334155; /* slate-700 */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
-        .section-title {
-            color: #4338ca; /* indigo-700 */
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        .interactive-card {
-            transition: all 0.3s ease-in-out;
-            border: 1px solid #cbd5e1; /* slate-300 */
+
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
         }
-        .interactive-card:hover, .interactive-card.active {
+
+        h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #555;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            color: #777;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-button {
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #667eea;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .content-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 2.4em;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 30px 0 20px 0;
+            font-size: 1.8em;
+        }
+
+        h4 {
+            color: #555;
+            margin: 20px 0 15px 0;
+            font-size: 1.4em;
+        }
+
+        .hero-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 6px solid #667eea;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em;
+        }
+
+        .hero-box h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        .mechanism-box {
+            background: white;
+            border: 4px solid #667eea;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .mechanism-box h3 {
+            color: #667eea;
+            text-align: center;
+            margin-top: 0;
+            font-size: 2em;
+        }
+
+        .three-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .step-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            border-color: #4f46e5; /* indigo-600 */
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
         }
-        .chart-container {
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .step-card h4 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .timeline {
             position: relative;
-            height: 300px;
+            padding: 30px 0;
+            margin: 30px 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 20px 0 20px 60px;
+            border-left: 4px solid #667eea;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -14px;
+            top: 25px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            box-shadow: 0 0 0 5px white, 0 0 0 8px #667eea;
+        }
+
+        .timeline-item h4 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .week-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .week-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .week-card h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .tradition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .tradition-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-top: 5px solid;
+        }
+
+        .tradition-card.socratic {
+            border-top-color: #3498db;
+        }
+
+        .tradition-card.buddhist {
+            border-top-color: #f39c12;
+        }
+
+        .tradition-card.confucian {
+            border-top-color: #e74c3c;
+        }
+
+        .tradition-card.stoic {
+            border-top-color: #2ecc71;
+        }
+
+        .tradition-card.care {
+            border-top-color: #9b59b6;
+        }
+
+        .tradition-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .tradition-card h3 {
+            margin-top: 0;
+        }
+
+        .tradition-card.socratic h3 { color: #3498db; }
+        .tradition-card.buddhist h3 { color: #f39c12; }
+        .tradition-card.confucian h3 { color: #e74c3c; }
+        .tradition-card.stoic h3 { color: #2ecc71; }
+        .tradition-card.care h3 { color: #9b59b6; }
+
+        .interactive-demo {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 3px solid #667eea;
+        }
+
+        .demo-selector {
+            display: inline-block;
+            margin: 15px;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            font-weight: 600;
+        }
+
+        .demo-selector:hover {
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-selector.selected {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .result-box {
+            background: #f0f7ff;
+            border: 3px solid #667eea;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .comparison-table {
             width: 100%;
-            max-width: 600px;
-            margin: auto;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
-        .tab-btn.active {
-            background-color: #4f46e5;
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1em;
         }
-        .step-item.active .step-circle {
-            background-color: #4f46e5;
-            color: white;
-            border-color: #4f46e5;
+
+        .comparison-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid #eee;
         }
-         .step-item.active .step-title {
-            color: #4338ca;
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .key-point {
+            background: #e8f5e9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #4caf50;
+        }
+
+        .key-point h4 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #ff9800;
+        }
+
+        .warning-box h4 {
+            color: #e65100;
+            margin-top: 0;
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 35px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, #ffeb3b70 60%);
+            padding: 2px 5px;
+            font-weight: 600;
+        }
+
+        blockquote {
+            border-left: 5px solid #667eea;
+            padding-left: 25px;
+            margin: 25px 0;
+            font-style: italic;
+            color: #555;
+            background: #f8f9fa;
+            padding: 20px 20px 20px 25px;
+            border-radius: 5px;
+        }
+
+        .abcd-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .abcd-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid;
+        }
+
+        .abcd-card.agency { border-top-color: #e74c3c; }
+        .abcd-card.beauty { border-top-color: #9b59b6; }
+        .abcd-card.context { border-top-color: #f39c12; }
+        .abcd-card.dynamics { border-top-color: #3498db; }
+
+        .abcd-card h4 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .abcd-card.agency h4 { color: #e74c3c; }
+        .abcd-card.beauty h4 { color: #9b59b6; }
+        .abcd-card.context h4 { color: #f39c12; }
+        .abcd-card.dynamics h4 { color: #3498db; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .nav-tabs { flex-direction: column; }
+            .tab-button { width: 100%; }
+            .three-steps, .tradition-grid, .week-grid, .abcd-grid {
+                grid-template-columns: 1fr;
+            }
+            .content-section { padding: 25px; }
+        }
+
+        .practice-example {
+            background: #fff;
+            border: 2px solid #667eea;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .practice-example h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .flow-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .flow-item {
+            display: inline-block;
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            margin: 10px 5px;
+            font-weight: 600;
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            margin: 0 15px;
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #4caf50;
+        }
+
+        .benefit-card h4 {
+            color: #2e7d32;
+            margin-top: 0;
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-700">
+<body>
+    <div class="container">
+        <header>
+            <h1>Ethics as Capability Development</h1>
+            <p class="subtitle">A Read-Evaluate-Reconstruct Approach</p>
+            <p class="tagline">Teaching Students to Examine and Transform Themselves Using 2,500 Years of Practical Wisdom</p>
+        </header>
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-indigo-700">Ethical Architecture</h1>
-            <div class="hidden md:flex space-x-6 text-sm">
-                <a href="#foundation" class="text-slate-600 hover:text-indigo-600 transition">Foundation</a>
-                <a href="#principles" class="text-slate-600 hover:text-indigo-600 transition">Principles</a>
-                <a href="#language" class="text-slate-600 hover:text-indigo-600 transition">Language</a>
-                <a href="#toolkit" class="text-slate-600 hover:text-indigo-600 transition">Toolkit</a>
-                <a href="#cartography" class="text-slate-600 hover:text-indigo-600 transition">Cartography</a>
-            </div>
+        <nav class="nav-tabs">
+            <button class="tab-button active" onclick="showTab('overview', this)">Course Overview</button>
+            <button class="tab-button" onclick="showTab('mechanism', this)">Core Mechanism</button>
+            <button class="tab-button" onclick="showTab('structure', this)">Course Structure</button>
+            <button class="tab-button" onclick="showTab('tools', this)">Philosophical Tools</button>
+            <button class="tab-button" onclick="showTab('assessment', this)">Assessment</button>
+            <button class="tab-button" onclick="showTab('benefits', this)">Why This Works</button>
+            <button class="tab-button" onclick="showTab('demo', this)">Interactive Demo</button>
         </nav>
-    </header>
 
-    <main class="container mx-auto px-6 py-12">
+        <!-- Overview Section -->
+        <div id="overview" class="content-section active">
+            <h2>Course Overview: A Radically Different Approach to Ethics</h2>
 
-        <section id="intro" class="text-center mb-24">
-            <h2 class="text-4xl md:text-5xl font-bold mb-4">The Architecture of Ethical Reasoning</h2>
-            <p class="max-w-3xl mx-auto text-lg text-slate-600">
-                This is a unified framework for applied ethics, moving from abstract theory to a practical science of coordination. It provides worldview-agnostic tools to navigate complex moral decisions and design effective ethical systems.
-            </p>
-        </section>
+            <div class="hero-box">
+                <h3>The Central Question</h3>
+                <p><strong>Traditional ethics course asks:</strong> "What should I believe about right and wrong?"</p>
+                <p><strong>This course asks:</strong> "How can I develop the capability to examine and transform myself?"</p>
+            </div>
 
-        <section id="foundation" class="mb-24 pt-8">
-            <h3 class="text-3xl font-bold text-center mb-2 section-title">Part I: The Foundation</h3>
-            <p class="text-center max-w-2xl mx-auto mb-12 text-slate-600">
-                A key discovery from over 4,000 international gaming sessions grounds this framework: culturally diverse teams consistently outperform homogeneous ones when they focus on coordination capabilities rather than shared beliefs.
-            </p>
-            <div class="bg-white p-8 rounded-xl shadow-lg">
-                <h4 class="text-xl font-bold text-center mb-4">Performance Advantage of Diverse Teams</h4>
-                <div class="chart-container">
-                    <canvas id="performanceChart"></canvas>
+            <h3>What Makes This Course Different</h3>
+
+            <div class="comparison-table">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Traditional Ethics Course</th>
+                            <th>This Capability-Based Course</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Teaches <strong>theories</strong> (utilitarianism, deontology, virtue ethics)</td>
+                            <td>Teaches <strong>practices</strong> (how to examine beliefs, emotions, actions, patterns)</td>
+                        </tr>
+                        <tr>
+                            <td>Students <strong>learn about</strong> philosophers</td>
+                            <td>Students <strong>practice like</strong> philosophers</td>
+                        </tr>
+                        <tr>
+                            <td>Abstract scenarios (trolley problems)</td>
+                            <td>Students' actual lives and choices</td>
+                        </tr>
+                        <tr>
+                            <td>Passive learning (reading, lectures)</td>
+                            <td>Active practice (daily exercises, reflection)</td>
+                        </tr>
+                        <tr>
+                            <td>Success = good grade on exam</td>
+                            <td>Success = measurable capability development</td>
+                        </tr>
+                        <tr>
+                            <td>Fragmented (different theory each week)</td>
+                            <td>Integrated (one mechanism, multiple applications)</td>
+                        </tr>
+                        <tr>
+                            <td>Can ace course without changing at all</td>
+                            <td>Cannot succeed without actually developing</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Core Pedagogical Insight</h3>
+
+            <div class="mechanism-box">
+                <h3>Experience → Practice → Understanding → Theory</h3>
+                <p style="text-align: center; margin: 20px 0;">Students <strong>do</strong> the work of self-examination for weeks before we name what they're doing or explain the theory behind it.</p>
+                <p style="text-align: center;"><strong>Result:</strong> Theory becomes explanation of lived experience, not abstract concept to memorize.</p>
+            </div>
+
+            <h3>What Students Actually Learn</h3>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h4>✓ The Reader Position</h4>
+                    <p>Ability to observe their own thoughts, emotions, and behaviors as if watching someone else</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>✓ Critical Self-Examination</h4>
+                    <p>Tools for questioning their own beliefs, assumptions, and automatic patterns</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>✓ Deliberate Reconstruction</h4>
+                    <p>Methods for actually changing habits, responses, and character through practice</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>✓ Multiple Traditions</h4>
+                    <p>Practical tools from Socratic, Buddhist, Confucian, Stoic, and Care traditions</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>✓ Meta-Constructive Capability</h4>
+                    <p>The ability to continue developing themselves long after the course ends</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>✓ Coordination Across Difference</h4>
+                    <p>Understanding how to work with people who have different values and beliefs</p>
                 </div>
             </div>
-            <div class="mt-12">
-                 <h4 class="text-2xl font-bold text-center mb-6">Your Ethical Mind as Living Architecture: The PRF</h4>
-                 <div class="grid md:grid-cols-3 gap-6">
-                    <div class="col-span-3 md:col-span-1 space-y-4">
-                         <div id="prf-card-b" class="interactive-card bg-white p-4 rounded-lg cursor-pointer"><strong>B:</strong> Belief System</div>
-                         <div id="prf-card-r" class="interactive-card bg-white p-4 rounded-lg cursor-pointer"><strong>R:</strong> Rule System</div>
-                         <div id="prf-card-o" class="interactive-card bg-white p-4 rounded-lg cursor-pointer"><strong>O:</strong> Ontological System</div>
-                         <div id="prf-card-a" class="interactive-card bg-white p-4 rounded-lg cursor-pointer"><strong>A+:</strong> Authenticity System</div>
-                         <div id="prf-card-c" class="interactive-card bg-white p-4 rounded-lg cursor-pointer"><strong>C:</strong> Coordination Capabilities</div>
-                         <div id="prf-card-uev" class="interactive-card bg-white p-4 rounded-lg cursor-pointer"><strong>UEV:</strong> Unified Experience Vector</div>
-                    </div>
-                    <div id="prf-detail-view" class="md:col-span-2 bg-white p-6 rounded-xl shadow-lg">
-                        <h5 id="prf-detail-title" class="font-bold text-xl mb-2 text-indigo-700">Click a component to learn more</h5>
-                        <p id="prf-detail-text" class="text-slate-600">Your moral reasoning operates through an integrated, measurable system. This Personal Reality Framework (PRF) is the living architecture of your ethical mind.</p>
-                    </div>
-                 </div>
-            </div>
-        </section>
 
-        <section id="principles" class="mb-24 pt-8">
-            <h3 class="text-3xl font-bold text-center mb-2 section-title">The Three Universal Coordination Principles</h3>
-            <p class="text-center max-w-2xl mx-auto mb-12 text-slate-600">
-                Cross-cultural research reveals that all effective ethical coordination, regardless of the specific moral tradition, relies on three organizational principles.
-            </p>
-            <div class="grid md:grid-cols-3 gap-8">
-                 <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                    <div class="text-4xl mb-4">1</div>
-                    <h4 class="font-bold text-xl mb-2">Capability-Based Connection</h4>
-                    <p class="text-slate-600">Coordination emerges from recognizing others' ethical capabilities, not from demanding shared beliefs. A utilitarian and a deontologist can work together by respecting each other's analytical strengths.</p>
-                </div>
-                 <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                    <div class="text-4xl mb-4">2</div>
-                    <h4 class="font-bold text-xl mb-2">Temporal Coherence</h4>
-                    <p class="text-slate-600">Ethical decisions must integrate past wisdom, present reality, and future consequences. This ability to maintain coherence across time is a measurable predictor of ethical capability.</p>
-                </div>
-                 <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                    <div class="text-4xl mb-4">3</div>
-                    <h4 class="font-bold text-xl mb-2">Cross-Scale Organization</h4>
-                    <p class="text-slate-600">The same architectural principles that enable individual moral agency also enable effective family, institutional, and societal ethics. Ethical systems are fractal.</p>
-                </div>
-            </div>
-        </section>
+            <h3>Why Faculty Should Consider This Approach</h3>
 
-        <section id="language" class="mb-24 pt-8">
-            <h3 class="text-3xl font-bold text-center mb-2 section-title">Part II: The Language of Capability</h3>
-            <p class="text-center max-w-2xl mx-auto mb-12 text-slate-600">
-                This framework revolutionizes how we understand ethical statements. Instead of asking what a statement like "We should help the poor" *means* as a universal truth, we ask what *capabilities* an agent needs to work with it effectively.
-            </p>
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <h4 class="text-xl font-bold text-center">Capability Specification for: "We Should Help the Poor"</h4>
-                <p class="text-center text-sm text-slate-500 mb-8">Effective use of this statement requires four distinct capabilities:</p>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                    <div>
-                        <div class="mx-auto bg-indigo-100 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">R</div>
-                        <h5 class="font-semibold mt-4">Recognition</h5>
-                        <p class="text-sm text-slate-500">Ability to identify poverty's impacts.</p>
-                    </div>
-                    <div>
-                        <div class="mx-auto bg-indigo-100 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">R</div>
-                        <h5 class="font-semibold mt-4">Response</h5>
-                        <p class="text-sm text-slate-500">Procedural knowledge for anti-poverty actions.</p>
-                    </div>
-                    <div>
-                        <div class="mx-auto bg-indigo-100 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">C</div>
-                        <h5 class="font-semibold mt-4">Coordination</h5>
-                        <p class="text-sm text-slate-500">Skills to work with others on complementary actions.</p>
-                    </div>
-                    <div>
-                        <div class="mx-auto bg-indigo-100 text-indigo-700 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">A</div>
-                        <h5 class="font-semibold mt-4">Assessment</h5>
-                        <p class="text-sm text-slate-500">Meta-capacity to evaluate and improve strategies.</p>
-                    </div>
-                </div>
+            <div class="key-point">
+                <h4>Addresses Persistent Problems in Ethics Education</h4>
+                <ul>
+                    <li><strong>Student disengagement:</strong> Students find traditional ethics abstract and disconnected from life</li>
+                    <li><strong>No transfer:</strong> Students can pass exams but can't apply concepts to actual situations</li>
+                    <li><strong>No development:</strong> Students don't change or grow through the course</li>
+                    <li><strong>Preparation gaps:</strong> Underprepared students struggle with abstract theory</li>
+                </ul>
+                <p><strong>This approach solves all four:</strong> Students work on their own lives (engaged), develop actual skills (transfer), measurably change (development), and start with concrete practice before theory (accessible).</p>
             </div>
-        </section>
 
-        <section id="toolkit" class="mb-24 pt-8">
-            <h3 class="text-3xl font-bold text-center mb-2 section-title">Part III: The Measurement Toolkit</h3>
-             <p class="text-center max-w-2xl mx-auto mb-12 text-slate-600">
-                This framework integrates formal logic as a practical toolkit for ethical reasoning. Explore the different tools and their applications below.
-            </p>
-            <div class="bg-white rounded-xl shadow-lg">
-                <div class="flex border-b border-slate-200">
-                    <button class="tab-btn flex-1 p-4 font-semibold text-slate-500 transition active" data-tab="atl">ATL</button>
-                    <button class="tab-btn flex-1 p-4 font-semibold text-slate-500 transition" data-tab="stit">STIT</button>
-                    <button class="tab-btn flex-1 p-4 font-semibold text-slate-500 transition" data-tab="coalition">Coalition Logic</button>
-                    <button class="tab-btn flex-1 p-4 font-semibold text-slate-500 transition" data-tab="atcf">ATCF</button>
+            <div class="warning-box">
+                <h4>⚠️ What This Requires from Instructor</h4>
+                <ul>
+                    <li>Shift from "covering content" to "facilitating practice"</li>
+                    <li>Willingness to model ongoing development (not claim to be finished)</li>
+                    <li>Comfort with students having different values/beliefs (pluralism)</li>
+                    <li>Focus on capability development rather than "right answers"</li>
+                    <li>Weekly engagement with student journals (but with clear rubrics)</li>
+                </ul>
+                <p><strong>Trade-off:</strong> More engaged teaching, but clearer structure and more meaningful student outcomes.</p>
+            </div>
+        </div>
+
+        <!-- Core Mechanism Section -->
+        <div id="mechanism" class="content-section">
+            <h2>The Core Mechanism: Read-Evaluate-Reconstruct</h2>
+
+            <div class="hero-box">
+                <h3>The Discovery</h3>
+                <p>For 2,500 years, philosophers across cultures independently discovered the same fundamental process: <span class="highlight">Humans can take a position where they READ their earlier selves as substrate, EVALUATE what they find, and PRACTICE to RECONSTRUCT themselves.</span></p>
+                <p><strong>This is not metaphor. This is the actual mechanism of self-development.</strong></p>
+            </div>
+
+            <h3>How It Works: The Temporal Gap</h3>
+
+            <div class="flow-diagram">
+                <h4>The Three-Step Cycle</h4>
+                <div style="margin: 30px 0;">
+                    <div class="flow-item" style="background: #ffebee;">Time t<br><small>You act/think/feel</small></div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-item" style="background: #e3f2fd;">Time t+1<br><small>You observe what you did</small></div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-item" style="background: #e8f5e9;">Time t+2<br><small>You practice differently</small></div>
                 </div>
-                <div class="p-8">
-                    <div id="tab-content-atl" class="tab-content">
-                        <h4 class="text-xl font-bold">Alternating-Time Temporal Logic (ATL)</h4>
-                        <p class="text-sm text-slate-500 mb-4">For Strategic Ethical Analysis</p>
-                        <p>ATL shifts the question from "Is this action right?" to "Do we have a strategy to ensure an ethical outcome?" It transforms abstract moral debate into practical analysis of capabilities and coordination.</p>
-                        <p class="mt-2 text-sm bg-slate-50 p-3 rounded-lg"><strong>Example:</strong> "Does our society have coalition strategies to guarantee universal healthcare access, regardless of political opposition or economic shifts?"</p>
-                    </div>
-                    <div id="tab-content-stit" class="tab-content hidden">
-                        <h4 class="text-xl font-bold">"Seeing To It That" Logic (STIT)</h4>
-                        <p class="text-sm text-slate-500 mb-4">For Personal Moral Agency</p>
-                        <p>STIT formalizes individual responsibility. It distinguishes between hoping for an outcome and having the actual capability to ethically ensure it happens. This prevents making commitments based on good intentions alone.</p>
-                         <p class="mt-2 text-sm bg-slate-50 p-3 rounded-lg"><strong>Example:</strong> It helps differentiate "I hope I'll be a good parent" (a wish) from "I have the skills and resources to ensure my child receives needed care" (a commitment based on capability).</p>
-                    </div>
-                    <div id="tab-content-coalition" class="tab-content hidden">
-                        <h4 class="text-xl font-bold">Coalition Logic</h4>
-                         <p class="text-sm text-slate-500 mb-4">For Distributed Ethical Responsibility</p>
-                        <p>This tool is for problems no single person can solve. It models how groups can coordinate their capabilities to achieve ethical outcomes that are beyond any individual's power.</p>
-                        <p class="mt-2 text-sm bg-slate-50 p-3 rounded-lg"><strong>Example:</strong> "What combination of roles (HR, leadership, staff) and capabilities is needed to eliminate hiring bias, and how must they coordinate to succeed?"</p>
-                    </div>
-                    <div id="tab-content-atcf" class="tab-content hidden grid md:grid-cols-2 gap-6 items-center">
-                        <div>
-                            <h4 class="text-xl font-bold">Adaptive Temporal Coherence Function (ATCF)</h4>
-                            <p class="text-sm text-slate-500 mb-4">For Mathematical Ethics Across Time</p>
-                            <p>The ATCF is a measurable assessment of an agent's ability to maintain a coherent ethical identity over time. High scores predict superior ethical decision-making. It has four key components.</p>
-                        </div>
-                        <div class="chart-container" style="height: 250px;">
-                             <canvas id="atcfChart"></canvas>
-                        </div>
-                    </div>
+                <p style="margin-top: 30px;"><strong>Key insight:</strong> You don't need to be two people—you need to be the same person at two different moments. The temporal gap creates the space for examination.</p>
+            </div>
+
+            <div class="three-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>READ</h4>
+                    <p><strong>Take the reader position</strong> toward your past self</p>
+                    <p>Your earlier self becomes <strong>substrate</strong>—information you can observe</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>"What did I actually do?"</li>
+                        <li>"What was I feeling?"</li>
+                        <li>"What pattern do I notice?"</li>
+                        <li>"What belief was I acting from?"</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>EVALUATE</h4>
+                    <p><strong>Assess what you found</strong> in your reading</p>
+                    <p>Did it work? Align with values? Serve your goals?</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>"Did that response help or harm?"</li>
+                        <li>"Is this belief serving me well?"</li>
+                        <li>"Does this pattern align with who I want to be?"</li>
+                        <li>"What would work better?"</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>RECONSTRUCT</h4>
+                    <p><strong>Practice to change</strong> your physical substrate</p>
+                    <p>Repeated practice literally rewires neural patterns</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>Practice responding differently to criticism</li>
+                        <li>Question a belief systematically</li>
+                        <li>Develop a new habit through repetition</li>
+                        <li>Build character through role-based behavior</li>
+                    </ul>
                 </div>
             </div>
-        </section>
 
-        <section id="cartography" class="pt-8">
-            <h3 class="text-3xl font-bold text-center mb-2 section-title">Part IV: Applied Integration - Ethical Cartography</h3>
-            <p class="text-center max-w-2xl mx-auto mb-12 text-slate-600">
-                Ethical Cartography is the unified process in action. It's about mapping a moral territory and designing navigation routes, not just arguing about destinations. Let's apply it to the challenge of developing AI Ethics Guidelines.
-            </p>
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                 <div class="flex flex-col md:flex-row gap-8">
-                    <div class="w-full md:w-1/3 space-y-2">
-                        <div id="step-1" class="step-item interactive-card p-3 rounded-lg cursor-pointer active">
-                            <h5 class="step-title font-semibold">1. Cross-Scale Analysis</h5>
-                        </div>
-                        <div id="step-2" class="step-item interactive-card p-3 rounded-lg cursor-pointer">
-                            <h5 class="step-title font-semibold">2. PRF Proposition Development</h5>
-                        </div>
-                        <div id="step-3" class="step-item interactive-card p-3 rounded-lg cursor-pointer">
-                             <h5 class="step-title font-semibold">3. Strategic Analysis (ATL)</h5>
-                        </div>
-                        <div id="step-4" class="step-item interactive-card p-3 rounded-lg cursor-pointer">
-                             <h5 class="step-title font-semibold">4. Agency Assessment (STIT)</h5>
-                        </div>
-                         <div id="step-5" class="step-item interactive-card p-3 rounded-lg cursor-pointer">
-                             <h5 class="step-title font-semibold">5. Temporal Check (ATCF)</h5>
-                        </div>
-                         <div id="step-6" class="step-item interactive-card p-3 rounded-lg cursor-pointer">
-                             <h5 class="step-title font-semibold">6. Game-Theoretic Validation</h5>
-                        </div>
-                    </div>
-                    <div class="w-full md:w-2/3 bg-slate-50 p-6 rounded-lg">
-                        <h4 id="step-detail-title" class="font-bold text-xl mb-2 text-indigo-700"></h4>
-                        <p id="step-detail-text" class="text-slate-600"></p>
-                    </div>
-                 </div>
+            <h3>Why This Is Revolutionary</h3>
+
+            <div class="mechanism-box">
+                <h3>The Physical Reality</h3>
+                <p>This is not self-help platitudes. This is neuroscience:</p>
+                <ul style="text-align: left; margin: 20px 40px;">
+                    <li>Your habits, beliefs, emotional reactions are <strong>physically encoded</strong> in neural patterns</li>
+                    <li>These patterns are <strong>real substrate</strong>—they can be read (observed) and modified</li>
+                    <li>When you practice differently, you <strong>literally change</strong> this physical substrate</li>
+                    <li>Repeated practice <strong>rewires</strong> your brain (neuroplasticity)</li>
+                    <li>"The doing shapes the being" is not metaphor—it's mechanism</li>
+                </ul>
             </div>
-        </section>
 
-    </main>
-    <footer class="text-center py-8 text-sm text-slate-500">
-        <p>The Architecture of Ethical Reasoning: A Unified Framework. FAIM-QIRF.</p>
-        <a href="https://rmertzman-tech.github.io/capability-coordination-framework/index.html" class="hover:text-indigo-600 underline" target="_blank">Technical Repository</a>
-    </footer>
+            <h3>What All Philosophers Discovered</h3>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Smooth scroll for nav links
-            document.querySelectorAll('header nav a').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
+            <div class="tradition-grid">
+                <div class="tradition-card socratic">
+                    <h3>🏛️ Socrates (Greek)</h3>
+                    <p><strong>READ:</strong> Your beliefs through systematic questioning</p>
+                    <p><strong>EVALUATE:</strong> Coherence, consistency, truth</p>
+                    <p><strong>RECONSTRUCT:</strong> Revise beliefs based on examination</p>
+                    <p><strong>Tool:</strong> Socratic Method</p>
+                </div>
 
-            // Performance Chart
-            const perfCtx = document.getElementById('performanceChart').getContext('2d');
-            new Chart(perfCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Complex Dilemmas', 'Adaptation', 'Innovation', 'Stakeholder Satisfaction'],
-                    datasets: [{
-                        label: '% Superior Performance of Diverse Teams',
-                        data: [23, 40, 35, 52],
-                        backgroundColor: 'rgba(79, 70, 229, 0.6)',
-                        borderColor: 'rgba(79, 70, 229, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    scales: { y: { beginAtZero: true, max: 60, ticks: { callback: value => value + '%' } } },
-                    plugins: { legend: { display: false } }
-                }
-            });
+                <div class="tradition-card buddhist">
+                    <h3>🕉️ Buddha (Indian)</h3>
+                    <p><strong>READ:</strong> Your mental states as they arise</p>
+                    <p><strong>EVALUATE:</strong> Do they serve you or cause suffering?</p>
+                    <p><strong>RECONSTRUCT:</strong> Train different responses through practice</p>
+                    <p><strong>Tool:</strong> Mindfulness Meditation</p>
+                </div>
 
-            // PRF Details
-            const prfDetails = {
-                b: { title: 'Belief System (B)', text: "Your probability assessments and confidence levels about moral propositions, with measurable neural correlates in prefrontal regions." },
-                r: { title: 'Rule System (R)', text: "Your procedural knowledge for navigating ethical situations, with weighted decision procedures that activate based on context." },
-                o: { title: 'Ontological System (O)', text: "Your fundamental categories for understanding moral reality—concepts of personhood, responsibility, harm, and justice." },
-                a: { title: 'Authenticity System (A+)', text: "Your standards for evaluating alignment with your core identity, including your Identity Kernel (IK), the invariant structures of your ethical self." },
-                c: { title: 'Coordination Capabilities (C)', text: "Your empirically assessed skills for working with others on ethical challenges, including perspective-taking and conflict resolution." },
-                uev: { title: 'Unified Experience Vector (UEV)', text: "The simultaneous, measurable integration of your Global Feeling Tone, Emotional Motivation Vector, Rational Deliberation Vector, and Action Readiness Vector." }
-            };
+                <div class="tradition-card confucian">
+                    <h3>☯️ Confucius (Chinese)</h3>
+                    <p><strong>READ:</strong> Your actions in social roles</p>
+                    <p><strong>EVALUATE:</strong> Did you act with humaneness (ren)?</p>
+                    <p><strong>RECONSTRUCT:</strong> Character through repeated practice (xiu shen)</p>
+                    <p><strong>Tool:</strong> Role-Based Practice</p>
+                </div>
 
-            const prfDetailTitle = document.getElementById('prf-detail-title');
-            const prfDetailText = document.getElementById('prf-detail-text');
-            document.querySelectorAll('.interactive-card[id^="prf-card-"]').forEach(card => {
-                card.addEventListener('click', () => {
-                    document.querySelectorAll('.interactive-card[id^="prf-card-"]').forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                    const key = card.id.split('-')[2];
-                    prfDetailTitle.innerText = prfDetails[key].title;
-                    prfDetailText.innerText = prfDetails[key].text;
-                });
-            });
+                <div class="tradition-card stoic">
+                    <h3>🏛️ Stoics (Greek/Roman)</h3>
+                    <p><strong>READ:</strong> What's in your control vs. what's not</p>
+                    <p><strong>EVALUATE:</strong> Where are you wasting energy?</p>
+                    <p><strong>RECONSTRUCT:</strong> Focus only on controllables</p>
+                    <p><strong>Tool:</strong> Dichotomy of Control + Daily Review</p>
+</div><div class="tradition-card care">
+                <h3>💜 Care Ethics (Modern)</h3>
+                <p><strong>READ:</strong> Your relationships and responsiveness</p>
+                <p><strong>EVALUATE:</strong> Are you attending to actual needs?</p>
+                <p><strong>RECONSTRUCT:</strong> Practice responsive care in context</p>
+                <p><strong>Tool:</strong> Attentive Listening & Context-Reading</p>
+            </div>
+        </div>
 
-            // Logic Toolkit Tabs
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const tab = btn.dataset.tab;
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    tabContents.forEach(content => {
-                        if (content.id === `tab-content-${tab}`) {
-                            content.classList.remove('hidden');
-                        } else {
-                            content.classList.add('hidden');
-                        }
-                    });
-                });
-            });
+        <div class="key-point">
+            <h4>🔑 The Unifying Insight</h4>
+            <p><strong>Despite developing independently across 2,500 years and three continents, all these traditions discovered the same basic mechanism.</strong></p>
+            <p>They differ in:</p>
+            <ul>
+                <li><strong>What substrate they read</strong> (beliefs, mental states, actions, control boundaries, relationships)</li>
+                <li><strong>What tools they use to read</strong> (questioning, observation, reflection, analysis)</li>
+                <li><strong>What they aim to reconstruct</strong> (understanding, responses, character, focus, care)</li>
+            </ul>
+            <p><strong>But the fundamental process is identical: Read-Evaluate-Reconstruct</strong></p>
+        </div>
+
+        <h3>Teaching Strategy: Experience First, Theory Later</h3>
+
+        <div class="practice-example">
+            <h4>Week 1-2: Students DO It Without Naming It</h4>
+            <p><strong>Exercise:</strong> "Describe a recent choice. Now read what you wrote as if watching someone else. What do you notice? What would you do differently?"</p>
+            <p><strong>What's happening:</strong> They're experiencing the read-evaluate-reconstruct cycle</p>
+            <p><strong>But we don't tell them yet.</strong></p>
+        </div>
+
+        <div class="practice-example">
+            <h4>Week 3-10: Students Practice Different Tools</h4>
+            <p><strong>Each week:</strong> One tradition's tool for reading specific substrate</p>
+            <p><strong>They're building skill</strong> with the mechanism through repeated practice</p>
+            <p><strong>Still not theoretical.</strong></p>
+        </div>
+
+        <div class="practice-example">
+            <h4>Week 11: We Name What They've Been Doing</h4>
+            <p><strong>Reveal:</strong> "For 10 weeks, you've been doing the same thing all philosophers discovered: read-evaluate-reconstruct"</p>
+            <p><strong>Now it's concrete:</strong> Theory explains their lived experience</p>
+            <p><strong>Understanding is deep</strong> because it's grounded in practice</p>
+        </div>
+    </div>
+
+    <!-- Course Structure Section -->
+    <div id="structure" class="content-section">
+        <h2>Course Structure: 14 Weeks, Progressive Development</h2>
+
+        <div class="hero-box">
+            <h3>Organizing Principle</h3>
+            <p>Everything builds from and returns to the <strong>Read-Evaluate-Reconstruct mechanism</strong>. Each week deepens understanding and skill with this single core process.</p>
+        </div>
+
+        <h3>Four-Part Arc</h3>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Part 1: Foundation (Weeks 1-4)</h4>
+                <p><strong>Goal:</strong> Experience and establish the basic cycle</p>
+                <p><strong>Activities:</strong> Daily journaling, taking reader position, identifying patterns</p>
+                <p><strong>Theory Level:</strong> Minimal—just "you can examine and change yourself"</p>
+                <p><strong>Outcome:</strong> Students practicing the cycle daily, seeing it work</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Part 2: Philosophical Tools (Weeks 5-10)</h4>
+                <p><strong>Goal:</strong> Learn tools from different traditions for reading different substrates</p>
+                <p><strong>Activities:</strong> Socratic questioning, mindfulness, role practice, Stoic review, care attention</p>
+                <p><strong>Theory Level:</strong> Medium—introduce thinkers and their contexts</p>
+                <p><strong>Outcome:</strong> Toolkit of practices, experience with multiple methods</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Part 3: Integration (Weeks 11-12)</h4>
+                <p><strong>Goal:</strong> Understand the pattern and design personal practice</p>
+                <p><strong>Activities:</strong> Recognizing read-evaluate-reconstruct across all tools, building integrated practice</p>
+                <p><strong>Theory Level:</strong> High—introduce meta-construction, PRF, ABCD framework</p>
+                <p><strong>Outcome:</strong> Understanding of mechanism, sustainable personal practice plan</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Part 4: Meta-Level (Weeks 13-14)</h4>
+                <p><strong>Goal:</strong> Understand as lifelong capability, plan continuation</p>
+                <p><strong>Activities:</strong> Reflecting on development, designing 5-year plan, contemporary applications</p>
+                <p><strong>Theory Level:</strong> Full framework—capability theory, constructor theory connection</p>
+                <p><strong>Outcome:</strong> Commitment to continued practice, understanding of "examined life"</p>
+            </div>
+        </div>
+
+        <h3>Week-by-Week Overview</h3>
+
+        <div class="week-grid">
+            <div class="week-card">
+                <h4>Week 1</h4>
+                <p><strong>Discovering Your Superpower</strong></p>
+                <p>Introduction to the read-evaluate-reconstruct cycle through practice on students' own choices</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 2</h4>
+                <p><strong>Why This Works</strong></p>
+                <p>Physical reality of change, neuroplasticity, the reader position</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 3</h4>
+                <p><strong>Your PRF</strong></p>
+                <p>Understanding your interpretive lens, critical thinking tools</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 4</h4>
+                <p><strong>Integration & Preview</strong></p>
+                <p>Assessment of current capability, preview of philosophical traditions</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 5</h4>
+                <p><strong>Socratic Tools</strong></p>
+                <p>Reading beliefs through systematic questioning</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 6</h4>
+                <p><strong>Buddhist Tools</strong></p>
+                <p>Reading mental states through mindfulness</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 7</h4>
+                <p><strong>Confucian Tools</strong></p>
+                <p>Reading actions in roles, character through practice</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 8</h4>
+                <p><strong>Stoic Tools</strong></p>
+                <p>Reading control boundaries, daily review practices</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 9</h4>
+                <p><strong>Care Ethics Tools</strong></p>
+                <p>Reading relationships and specific contexts</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 10</h4>
+                <p><strong>Building Your Toolkit</strong></p>
+                <p>Integration, designing personal practice combining tools</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 11</h4>
+                <p><strong>Understanding Meta-Construction</strong></p>
+                <p>Revealing the pattern, introducing theory behind practice</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 12</h4>
+                <p><strong>Your PRF & ABCD</strong></p>
+                <p>Advanced framework, understanding your development</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 13</h4>
+                <p><strong>Looking Forward</strong></p>
+                <p>Lifelong practice, 5-year development plan</p>
+            </div>
+
+            <div class="week-card">
+                <h4>Week 14</h4>
+                <p><strong>Contemporary Applications</strong></p>
+                <p>Applying ancient tools to modern challenges, closing commitments</p>
+            </div>
+        </div>
+
+        <h3>Daily Practice Requirements</h3>
+
+        <div class="mechanism-box">
+            <h3>Students Practice Every Day</h3>
+            <p><strong>Why:</strong> Capability develops through repeated practice, not sporadic effort</p>
+            <p><strong>Amount:</strong> 10-15 minutes daily (sustainable)</p>
+            <p><strong>What:</strong> Changes each week based on which tool they're learning</p>
+            <p><strong>Evidence:</strong> Brief daily journal entries + weekly reflection</p>
+        </div>
+
+        <div class="practice-example">
+            <h4>Example Weekly Practice Cycle</h4>
+            <p><strong>Week 6 (Buddhist Tools):</strong></p>
+            <ul>
+                <li><strong>Monday class:</strong> Introduction to mindfulness, in-class practice</li>
+                <li><strong>Mon-Wed daily:</strong> 5 minutes morning mindfulness meditation, brief journal entry</li>
+                <li><strong>Wednesday class:</strong> Debrief practice, work with impermanence concept</li>
+                <li><strong>Wed-Mon daily:</strong> Continue daily practice, apply to challenging emotions</li>
+                <li><strong>Weekend:</strong> 500-word reflection journal on week's practice</li>
+            </ul>
+            <p><strong>Next week:</strong> New tool (Confucian role practice), same pattern</p>
+        </div>
+
+        <h3>Why This Structure Works</h3>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h4>✓ Cumulative</h4>
+                <p>Each week builds on previous weeks—nothing gets left behind</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Repeating Pattern</h4>
+                <p>Same read-evaluate-reconstruct process every week—easy to follow</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Concrete to Abstract</h4>
+                <p>Practice first, theory later—grounded in experience</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Sustainable Practice</h4>
+                <p>10-15 min daily > 2 hours weekly—builds actual habits</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Multiple Entry Points</h4>
+                <p>Different tools work for different students—everyone finds something</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Clear Outcomes</h4>
+                <p>Students can see their own development week by week</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Philosophical Tools Section -->
+    <div id="tools" class="content-section">
+        <h2>Philosophical Tools: Five Traditions, One Mechanism</h2>
+
+        <div class="hero-box">
+            <h3>Reframing Philosophy</h3>
+            <p><strong>Not:</strong> "Here are theories to memorize"</p>
+            <p><strong>But:</strong> "Here are proven tools for reading and reconstructing yourself"</p>
+            <p>Students learn to <strong>use</strong> philosophy, not just know <strong>about</strong> it.</p>
+        </div>
+
+        <h3>Interactive Tool Explorer</h3>
+        <p><strong>Click on each tradition to see how it applies the read-evaluate-reconstruct mechanism:</strong></p>
+
+        <div class="interactive-demo">
+            <div class="demo-selector" onclick="showTool('socratic', this)">
+                <strong>🏛️ Socratic Method</strong>
+            </div>
+            <div class="demo-selector" onclick="showTool('buddhist', this)">
+                <strong>🕉️ Buddhist Mindfulness</strong>
+            </div>
+            <div class="demo-selector" onclick="showTool('confucian', this)">
+                <strong>☯️ Confucian Practice</strong>
+            </div>
+            <div class="demo-selector" onclick="showTool('stoic', this)">
+                <strong>🏛️ Stoic Review</strong>
+            </div>
+            <div class="demo-selector" onclick="showTool('care', this)">
+                <strong>💜 Care Ethics</strong>
+            </div>
+
+            <div id="tool-socratic" class="result-box">
+                <h3>🏛️ Socratic Method: Reading Your Beliefs</h3>
+                
+                <h4>The Problem Socrates Faced</h4>
+                <p>People in Athens thought they understood concepts like justice, virtue, and courage. But when questioned, their definitions fell apart. They had <strong>unexamined beliefs</strong>.</p>
+                
+                <h4>The Tool He Developed</h4>
+                <p><strong>Systematic questioning</strong> to reveal what you actually think and expose contradictions</p>
+                
+                <h4>How It's Read-Evaluate-Reconstruct</h4>
+                <div class="three-steps" style="margin-top: 20px;">
+                    <div class="step-card">
+                        <h4>READ</h4>
+                        <p>"What do you believe about X?"</p>
+                        <p>Forces articulation of belief-substrate</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>EVALUATE</h4>
+                        <p>"What do you mean by that? Does it apply here? What about this counter-example?"</p>
+                        <p>Tests coherence and consistency</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>RECONSTRUCT</h4>
+                        <p>Revise belief based on examination</p>
+                        <p>Continue questioning (ongoing process)</p>
+                    </div>
+                </div>
+                
+                <h4>Practice in Course (Week 5)</h4>
+                <ul>
+                    <li><strong>Monday:</strong> Learn the method, practice in pairs</li>
+                    <li><strong>Daily practice:</strong> Socratic journaling—pick a belief, question it systematically</li>
+                    <li><strong>Wednesday:</strong> Debrief discoveries, refine technique</li>
+                    <li><strong>Weekly reflection:</strong> How has this belief changed through examination?</li>
+                </ul>
+                
+                <h4>Transferable Skill</h4>
+                <p><strong>Lifelong capability:</strong> Can examine any belief, assumption, or argument systematically. Essential for critical thinking, avoiding dogmatism, continued learning.</p>
+            </div>
+
+            <div id="tool-buddhist" class="result-box">
+                <h3>🕉️ Buddhist Mindfulness: Reading Your Mental States</h3>
+                
+                <h4>The Problem Buddha Faced</h4>
+                <p>People suffer because they're <strong>caught in</strong> their mental states—anger, craving, anxiety—and react automatically without choice.</p>
+                
+                <h4>The Tool He Developed</h4>
+                <p><strong>Mindfulness practice</strong> to observe mental states without being controlled by them</p>
+                
+                <h4>How It's Read-Evaluate-Reconstruct</h4>
+                <div class="three-steps" style="margin-top: 20px;">
+                    <div class="step-card">
+                        <h4>READ</h4>
+                        <p>"Anger is present" (not "I AM angry")</p>
+                        <p>Taking reader position toward mental substrate</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>EVALUATE</h4>
+                        <p>"Does acting on this serve me?"</p>
+                        <p>Assessment of whether state is useful</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>RECONSTRUCT</h4>
+                        <p>"I'll let this pass / respond differently"</p>
+                        <p>Choice instead of automatic reaction</p>
+                    </div>
+                </div>
+                
+                <h4>The Key Insight</h4>
+                <p>The gap between <strong>experiencing</strong> an emotion and <strong>observing</strong> it can become very small with practice. Eventually you can take reader position almost instantly, creating space for choice.</p>
+                
+                <h4>Practice in Course (Week 6)</h4>
+                <ul>
+                    <li><strong>Monday:</strong> Introduction, 5-minute guided meditation in class</li>
+                    <li><strong>Daily practice:</strong> 5 minutes morning meditation, noticing when mind wanders</li>
+                    <li><strong>Wednesday:</strong> Working with impermanence—observing emotions arise and pass</li>
+                    <li><strong>Weekly reflection:</strong> One instance of successfully taking reader position toward difficult emotion</li>
+                </ul>
+                
+                <h4>Transferable Skill</h4>
+                <p><strong>Lifelong capability:</strong> Distance from automatic reactions. Crucial for emotional regulation, stress management, impulse control, maintaining relationships.</p>
+            </div>
+
+            <div id="tool-confucian" class="result-box">
+                <h3>☯️ Confucian Practice: Reading Your Actions in Roles</h3>
+                
+                <h4>The Problem Confucius Faced</h4>
+                <p>Social collapse in Warring States China. How to restore harmony? Some communities maintained it even in chaos—through role-based practice.</p>
+                
+                <h4>The Tool He Developed</h4>
+                <p><strong>Xiu shen (self-cultivation)</strong> through deliberate practice of role-appropriate behavior</p>
+                
+                <h4>How It's Read-Evaluate-Reconstruct</h4>
+                <div class="three-steps" style="margin-top: 20px;">
+                    <div class="step-card">
+                        <h4>READ</h4>
+                        <p>"How did I act in my role (friend, student, family member)?"</p>
+                        <p>Reading action-substrate in social context</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>EVALUATE</h4>
+                        <p>"Was I respectful? Caring? Responsible?"</p>
+                        <p>Assessing against role standards</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>RECONSTRUCT</h4>
+                        <p>Practice the behavior you want to embody</p>
+                        <p>Character develops through repeated action</p>
+                    </div>
+                </div>
+                
+                <h4>The Revolutionary Insight</h4>
+                <p><strong>"The doing shapes the being"</strong></p>
+                <p>You don't wait to FEEL helpful before acting helpful. You ACT helpful repeatedly, and the character/feeling develops. This is how neural patterns are rewired.</p>
+                
+                <h4>Practice in Course (Week 7)</h4>
+                <ul>
+                    <li><strong>Monday:</strong> Identify one role, one character quality to develop</li>
+                    <li><strong>Daily practice:</strong> Practice specific behaviors in that role</li>
+                    <li><strong>Evening reflection:</strong> "How did I do today? What to adjust tomorrow?"</li>
+                    <li><strong>Wednesday:</strong> Design xiu shen commitment—role, behaviors, timeline</li>
+                    <li><strong>Weekly reflection:</strong> How does deliberate practice feel different from "just being yourself"?</li>
+                </ul>
+                
+                <h4>Transferable Skill</h4>
+                <p><strong>Lifelong capability:</strong> Deliberately developing character. Essential for professional development, relationship building, leadership, becoming who you want to be.</p>
+            </div>
+
+            <div id="tool-stoic" class="result-box">
+                <h3>🏛️ Stoic Review: Reading Control Boundaries</h3>
+                
+                <h4>The Problem Stoics Faced</h4>
+                <p>After Alexander's conquests, individuals felt powerless against vast, chaotic forces. How to maintain agency?</p>
+                
+                <h4>The Tool They Developed</h4>
+                <p><strong>Dichotomy of Control</strong> + structured daily review practices</p>
+                
+                <h4>How It's Read-Evaluate-Reconstruct</h4>
+                <div class="three-steps" style="margin-top: 20px;">
+                    <div class="step-card">
+                        <h4>READ</h4>
+                        <p>"What's upsetting me? What happened today?"</p>
+                        <p>Identifying substrate (situations causing distress)</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>EVALUATE</h4>
+                        <p>"Which parts can I control? Which can't I?"</p>
+                        <p>Sorting controllable from uncontrollable</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>RECONSTRUCT</h4>
+                        <p>Focus ALL energy on controllable parts</p>
+                        <p>Rebuild response patterns over time</p>
+                    </div>
+                </div>
+                
+                <h4>The Stoic Practices</h4>
+                <ul>
+                    <li><strong>Morning Preparation:</strong> Preview challenges, pre-commit responses</li>
+                    <li><strong>Evening Review:</strong> What went well? What poorly? What was in my control?</li>
+                    <li><strong>Negative Visualization:</strong> Imagine loss to appreciate what you have</li>
+                    <li><strong>View from Above:</strong> See concerns in cosmic perspective</li>
+                </ul>
+                
+                <h4>Practice in Course (Week 8)</h4>
+                <ul>
+                    <li><strong>Monday:</strong> Learn dichotomy of control, apply to current stressors</li>
+                    <li><strong>Daily practice:</strong> 5-min morning prep, 10-min evening review</li>
+                    <li><strong>Wednesday:</strong> Additional practices (negative visualization, view from above)</li>
+                    <li><strong>Weekly reflection:</strong> How has response to challenges changed?</li>
+                </ul>
+                
+                <h4>Transferable Skill</h4>
+                <p><strong>Lifelong capability:</strong> Focus energy effectively, reduce anxiety about uncontrollables. Essential for stress management, resilience, productivity, peace of mind.</p>
+            </div>
+
+            <div id="tool-care" class="result-box">
+                <h3>💜 Care Ethics: Reading Relationships and Context</h3>
+                
+                <h4>The Problem Gilligan Identified</h4>
+                <p>Traditional ethics focused on abstract principles. But much of life is <strong>relational</strong>—we're embedded in webs of specific relationships requiring contextual response.</p>
+                
+                <h4>The Tool She Developed</h4>
+                <p><strong>Attentive care</strong> that reads specific contexts, needs, and relationships</p>
+                
+                <h4>How It's Read-Evaluate-Reconstruct</h4>
+                <div class="three-steps" style="margin-top: 20px;">
+                    <div class="step-card">
+                        <h4>READ</h4>
+                        <p>"What's the nature of THIS relationship? What does THIS person need in THIS context?"</p>
+                        <p>Reading relationship-substrate with attention to particulars</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>EVALUATE</h4>
+                        <p>"Is my response caring? Does it maintain relationship while addressing real needs?"</p>
+                        <p>Assessment of responsiveness and appropriateness</p>
+                    </div>
+                    <div class="step-card">
+                        <h4>RECONSTRUCT</h4>
+                        <p>Practice responsive care adapted to specific persons</p>
+                        <p>Develop attentiveness and flexibility</p>
+                    </div>
+                </div>
+                
+                <h4>The Key Insight</h4>
+                <p>You can't apply the same template to all relationships. Different people need different things at different times. Reading requires attention to context, not just applying universal rules.</p>
+                
+                <h4>Integrating Justice and Care</h4>
+                <ul>
+                    <li><strong>Justice tools read:</strong> Rights, fairness, systemic patterns</li>
+                    <li><strong>Care tools read:</strong> Specific needs, relationship dynamics, vulnerability</li>
+                    <li><strong>You need both:</strong> Without justice, care can be unfair. Without care, justice can miss crucial context.</li>
+                </ul>
+                
+                <h4>Practice in Course (Week 9)</h4>
+                <ul>
+                    <li><strong>Monday:</strong> Map relationship web, identify where practicing care</li>
+                    <li><strong>Daily practice:</strong> Pick one relationship, practice attentive presence</li>
+                    <li><strong>Wednesday:</strong> Integrating justice and care perspectives</li>
+                    <li><strong>Weekly reflection:</strong> How have I been showing up? What does this person need?</li>
+                </ul>
+                
+                <h4>Transferable Skill</h4>
+                <p><strong>Lifelong capability:</strong> Responsive care in relationships. Essential for friendship, family, professional relationships, community building, ethical leadership.</p>
+            </div>
+        </div>
+
+        <h3>Why Multiple Tools?</h3>
+
+        <div class="key-point">
+            <h4>Different Tools for Different Challenges</h4>
+            <p><strong>Students don't need all tools equally.</strong> Different people face different challenges:</p>
+            <ul>
+                <li>Struggle with automatic reactions? → Buddhist mindfulness tools</li>
+                <li>Want to develop character? → Confucian role practice</li>
+                <li>Need to examine beliefs? → Socratic questioning</li>
+                <li>Overwhelmed by things you can't control? → Stoic practices</li>
+                <li>Relationship challenges? → Care ethics attention</li>
+            </ul>
+            <p><strong>Goal:</strong> Build a personalized toolkit that addresses YOUR development needs.</p>
+        </div>
+
+        <div class="mechanism-box">
+            <h3>But All Tools Share the Same Foundation</h3>
+            <p style="text-align: center; font-size: 1.3em; margin: 20px 0;"><strong>Read → Evaluate → Reconstruct</strong></p>
+            <p>This single mechanism unifies all traditions. Students learn:</p>
+            <ul style="text-align: left; margin: 20px 40px;">
+                <li>The tools aren't competing theories (one "right," others "wrong")</li>
+                <li>They're compatible practices for the same fundamental process</li>
+                <li>You can use multiple tools from different traditions</li>
+                <li>They work together because they're variations on one mechanism</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Assessment Section -->
+    <div id="assessment" class="content-section">
+        <h2>Assessment: Measuring Actual Development</h2>
+
+        <div class="hero-box">
+            <h3>Assessment Philosophy</h3>
+            <p><strong>Traditional approach:</strong> Can you explain theories correctly on an exam?</p>
+            <p><strong>This approach:</strong> Can you demonstrate developed capability through practice?</p>
+            <p><strong>Result:</strong> Assessment drives practice, not performance.</p>
+        </div>
+
+        <h3>Assessment Structure (Total: 100%)</h3>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Weight</th>
+                    <th>What It Measures</th>
+                    <th>Why This Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Weekly Journals</strong><br>(12 total, drop 2 lowest)</td>
+                    <td><strong>40%</strong></td>
+                    <td>Evidence of practice, honest reflection, concept application, depth of examination</td>
+                    <td>Heaviest weight because this is where development happens—daily practice over time</td>
+                </tr>
+                <tr>
+                    <td><strong>Two Quizzes</strong><br>(Weeks 4 & 10)</td>
+                    <td><strong>20%</strong><br>(10% each)</td>
+                    <td>Basic comprehension of concepts, can match tools to traditions, understand mechanism</td>
+                    <td>Lower weight—checking understanding, not the main focus</td>
+                </tr>
+                <tr>
+                    <td><strong>Practice Demonstration</strong><br>(Weeks 5-10)</td>
+                    <td><strong>15%</strong></td>
+                    <td>Consistent daily practice (brief daily logs as evidence)</td>
+                    <td>Can't develop capability without practice—this ensures it happens</td>
+                </tr>
+                <tr>
+                    <td><strong>Integration Paper</strong><br>(Week 11)</td>
+                    <td><strong>10%</strong></td>
+                    <td>Can explain mechanism in own words, show understanding of pattern across traditions</td>
+                    <td>Mid-semester check on conceptual understanding</td>
+                </tr>
+                <tr>
+                    <td><strong>Final Reflection</strong><br>(Finals week)</td>
+                    <td><strong>15%</strong></td>
+                    <td>Evidence of capability development, understanding of own PRF, plan for continued practice</td>
+                    <td>Capstone—demonstrates semester's development and future direction</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Detailed Rubrics</h3>
+
+        <div class="practice-example">
+            <h4>Weekly Journal Rubric (20 points each)</h4>
+            <p><strong>Evidence of Practice (5 points):</strong></p>
+            <ul>
+                <li>5 pts: Clear evidence of daily practice, specific examples, consistency</li>
+                <li>3 pts: Some practice evident,inconsistent, vague examples</li>
+<li>1 pt: Little evidence of actual practice</li>
+</ul><p><strong>Honest Reflection (5 points):</strong></p>
+            <ul>
+                <li>5 pts: Genuine engagement with difficulties and successes, vulnerability</li>
+                <li>3 pts: Surface-level reflection, mostly reporting</li>
+                <li>1 pt: Performative, saying what student thinks instructor wants to hear</li>
+            </ul>
             
-            // ATCF Chart
-            const atcfCtx = document.getElementById('atcfChart').getContext('2d');
-            new Chart(atcfCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Historical Continuity (HC)', 'Present Integration (PI)', 'Prospective Coherence (PC)', 'Meta-Constructor Capacity (MCC)'],
-                    datasets: [{
-                        label: 'ATCF Components',
-                        data: [25, 25, 25, 25],
-                        backgroundColor: ['rgba(79, 70, 229, 0.7)', 'rgba(30, 64, 175, 0.7)', 'rgba(129, 140, 248, 0.7)', 'rgba(199, 210, 254, 0.7)'],
-                        borderColor: '#f1f5f9',
-                        borderWidth: 2
-                    }]
-                },
-                options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-            });
+            <p><strong>Accurate Concept Application (5 points):</strong></p>
+            <ul>
+                <li>5 pts: Correctly applies concepts from week, shows understanding</li>
+                <li>3 pts: Partial understanding, some confusion</li>
+                <li>1 pt: Misunderstands or doesn't apply concepts</li>
+            </ul>
+            
+            <p><strong>Depth of Self-Examination (5 points):</strong></p>
+            <ul>
+                <li>5 pts: Genuinely takes reader position, notices patterns, evaluates honestly</li>
+                <li>3 pts: Some examination but stays surface-level</li>
+                <li>1 pt: No real self-examination, just description</li>
+            </ul>
+            
+            <p><strong>Key Note:</strong> NOT graded on "right answers" or having certain beliefs/values. Graded on evidence of doing the work and thinking deeply.</p>
+        </div>
 
-            // Cartography Steps
-            const stepDetails = {
-                '1': { title: '1. Cross-Scale Analysis', text: 'Map the coordination requirements across all levels, from individual developers to international bodies. Identify how actions at one scale impact others.' },
-                '2': { title: '2. PRF Proposition Development', text: 'Instead of abstract principles like "AI should be fair," define the specific capabilities development teams must have in their Belief, Rule, and other PRF systems to detect and mitigate bias.' },
-                '3': { title: '3. Strategic Analysis (ATL)', text: 'Use Alternating-Time Temporal Logic to ask: "Does humanity have coalition strategies to ensure ethical AI development, even with conflicting interests and external pressures?" This moves from hope to strategy.' },
-                '4': { title: '4. Agency Assessment (STIT)', text: 'Use STIT logic to identify which specific agents (e.g., a lead engineer, a safety board) have the actual power to "see to it that" an ethical constraint is implemented, clarifying responsibility.' },
-                '5': { title: '5. Temporal Coherence Check (ATCF)', text: 'Assess whether the proposed guidelines will enhance or fragment the long-term ethical coherence of the stakeholders. Will these rules support authentic development or force inauthentic compliance?' },
-                '6': { title: '6. Game-Theoretic Validation', text: 'Test the proposed guidelines in a simulated "game" against serious challenges (e.g., market competition, national security concerns) to ensure they form a "winning strategy" for ethical AI.' }
-            };
+        <div class="practice-example">
+            <h4>Final Reflection Rubric (100 points)</h4>
+            
+            <p><strong>Evidence of Capability Development (30 points):</strong></p>
+            <ul>
+                <li>Specific examples of how you've changed</li>
+                <li>Comparison of Week 1 vs. Week 14 self</li>
+                <li>Concrete evidence (not just "I'm more self-aware")</li>
+            </ul>
+            
+            <p><strong>Understanding of Mechanism (20 points):</strong></p>
+            <ul>
+                <li>Can explain read-evaluate-reconstruct in own words</li>
+                <li>Shows understanding of how all traditions use this</li>
+                <li>Recognizes this as physical process (substrate, reconstruction)</li>
+            </ul>
+            
+            <p><strong>ABCD Framework Application (20 points):</strong></p>
+            <ul>
+                <li>Agency: What capability have you developed?</li>
+                <li>Beauty: What motivated sustained effort?</li>
+                <li>Context: How has understanding your context helped?</li>
+                <li>Dynamics: What patterns of change do you notice?</li>
+            </ul>
+            
+            <p><strong>PRF Understanding (15 points):</strong></p>
+            <ul>
+                <li>Can articulate your own PRF (values, beliefs, patterns)</li>
+                <li>Shows awareness of how it's developed this semester</li>
+                <li>Understands how different PRFs can support compatible capabilities</li>
+            </ul>
+            
+            <p><strong>Continued Practice Plan (15 points):</strong></p>
+            <ul>
+                <li>Specific, realistic plan for next 6-12 months</li>
+                <li>Which tools will you continue using?</li>
+                <li>How will you know you're making progress?</li>
+                <li>What philosophical resources will you continue studying?</li>
+            </ul>
+        </div>
 
-            const stepItems = document.querySelectorAll('.step-item');
-            const stepDetailTitle = document.getElementById('step-detail-title');
-            const stepDetailText = document.getElementById('step-detail-text');
+        <h3>Why This Assessment Works</h3>
 
-            function updateStepView(step) {
-                 stepItems.forEach(item => item.classList.remove('active'));
-                 document.getElementById(`step-${step}`).classList.add('active');
-                 stepDetailTitle.innerText = stepDetails[step].title;
-                 stepDetailText.innerText = stepDetails[step].text;
-            }
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h4>✓ Low-Stakes, High-Practice</h4>
+                <p>60% on practice/reflection (journals + practice demonstration). Only 20% on traditional testing. Reduces performance anxiety, encourages genuine engagement.</p>
+            </div>
 
-            stepItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const step = item.id.split('-')[1];
-                    updateStepView(step);
-                });
-            });
-            updateStepView('1');
-        });
-    </script>
-</body>
+            <div class="benefit-card">
+                <h4>✓ Aligned with Goals</h4>
+                <p>Want students to develop capability? Assess capability development. Want daily practice? Make practice part of grade. Assessment drives learning.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Respects Diversity</h4>
+                <p>Students don't need to adopt instructor's values. Different PRFs acceptable. Graded on quality of practice, not correctness of beliefs.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Impossible to Fake</h4>
+                <p>Can't get good grade without actually practicing. Daily logs accumulate over weeks. Real development becomes visible.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Growth-Oriented</h4>
+                <p>Two lowest journal scores dropped—everyone has bad weeks. Focus on trajectory of development, not single performances.</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Manageable to Grade</h4>
+                <p>Clear rubrics make journal grading fast (15-20 min per journal with practice). Quizzes partially auto-graded. Papers have structured prompts.</p>
+            </div>
+        </div>
+
+        <h3>Sample Quiz Questions</h3>
+
+        <div class="practice-example">
+            <h4>Quiz 1 (Week 4) - Sample Questions</h4>
+            
+            <p><strong>1. The read-evaluate-reconstruct cycle works because:</strong></p>
+            <ul style="list-style-type: none;">
+                <li>a) You can magically step outside yourself</li>
+                <li>b) At time t+1, you can observe your time-t self as substrate</li>
+                <li>c) Your beliefs are fixed and unchangeable</li>
+                <li>d) Philosophy provides final answers</li>
+            </ul>
+            
+            <p><strong>2. Your PRF (Phenomenological Reference Frame) is:</strong></p>
+            <ul style="list-style-type: none;">
+                <li>a) Something you're born with and cannot change</li>
+                <li>b) The lens through which you experience and interpret reality</li>
+                <li>c) Only about your religious beliefs</li>
+                <li>d) Irrelevant to ethical thinking</li>
+            </ul>
+            
+            <p><strong>3. "The doing shapes the being" (Confucius) means:</strong></p>
+            <ul style="list-style-type: none;">
+                <li>a) You must feel virtuous before you can act virtuously</li>
+                <li>b) Character is innate and cannot be developed</li>
+                <li>c) Repeated practice of behaviors physically rewires you</li>
+                <li>d) Actions don't affect who you become</li>
+            </ul>
+            
+            <p><strong>4. Short answer: Give a specific example from your own life this semester of taking the "reader position" toward your own substrate. What did you observe?</strong></p>
+        </div>
+
+        <div class="warning-box">
+            <h4>⚠️ What This Assessment Doesn't Do</h4>
+            <ul>
+                <li><strong>Doesn't assess "right answers"</strong> about ethical dilemmas (no trolley problems)</li>
+                <li><strong>Doesn't require students to share</strong> deeply personal/traumatic material</li>
+                <li><strong>Doesn't grade on having certain values</strong> (respects PRF diversity)</li>
+                <li><strong>Doesn't expect perfection</strong> (everyone struggles, failure is part of learning)</li>
+                <li><strong>Doesn't claim to measure "virtue"</strong> (assesses capability development, not moral worth)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div id="benefits" class="content-section">
+        <h2>Why This Approach Works: Evidence and Rationale</h2>
+
+        <div class="hero-box">
+            <h3>The Core Claim</h3>
+            <p>This approach succeeds where traditional ethics courses often fail because it teaches <span class="highlight">capabilities through practice</span> rather than theories through lectures.</p>
+        </div>
+
+        <h3>Problems with Traditional Ethics Courses</h3>
+
+        <div class="comparison-table">
+            <table style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Why It Happens</th>
+                        <th>How This Approach Solves It</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Student Disengagement</strong></td>
+                        <td>Abstract theories feel disconnected from real life</td>
+                        <td>Students work on their own lives from Day 1—immediate relevance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>No Transfer</strong></td>
+                        <td>Can explain theories on exam but can't apply to actual situations</td>
+                        <td>Practice actual skills that transfer to all domains of life</td>
+                    </tr>
+                    <tr>
+                        <td><strong>No Development</strong></td>
+                        <td>Memorizing theories doesn't change who you are</td>
+                        <td>Daily practice physically reconstructs neural patterns—measurable change</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Underprepared Students Struggle</strong></td>
+                        <td>Abstract philosophy requires strong reading/writing skills</td>
+                        <td>Starts concrete and experiential; theory comes after practice is established</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fragmentation</strong></td>
+                        <td>Different theory each week—no coherent framework</td>
+                        <td>One mechanism throughout—everything connects and builds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relativism Concerns</strong></td>
+                        <td>Students conclude "everyone's opinion is valid, so nothing matters"</td>
+                        <td>Shows how different PRFs can support compatible capabilities—respects difference without relativism</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Evidence This Works</h3>
+
+        <div class="key-point">
+            <h4>📊 Pedagogical Research Supporting This Approach</h4>
+            <ul>
+                <li><strong>Active Learning:</strong> Meta-analyses show active practice beats passive lecture (Freeman et al., 2014)</li>
+                <li><strong>Deliberate Practice:</strong> Sustained, focused practice with feedback develops expertise (Ericsson, Krampe, & Tesch-Römer, 1993)</li>
+                <li><strong>Metacognition:</strong> Reflecting on one's own thinking improves learning outcomes (Schraw & Dennison, 1994)</li>
+                <li><strong>Growth Mindset:</strong> Believing abilities can be developed increases achievement (Dweck, 2006)</li>
+                <li><strong>Self-Regulated Learning:</strong> Teaching students to monitor and adjust their own learning improves outcomes (Zimmerman, 2002)</li>
+            </ul>
+            <p><strong>This course applies all five:</strong> Active practice daily, deliberate skill development, constant metacognitive reflection, explicit growth framework, students self-regulating practice.</p>
+        </div>
+
+        <h3>Why Each Design Choice Matters</h3>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h4>Daily Practice (10-15 min)</h4>
+                <p><strong>Why:</strong> Capability develops through repeated practice, not sporadic effort</p>
+                <p><strong>Evidence:</strong> Habit formation research—daily practice becomes automatic in ~66 days (Lally et al., 2010)</p>
+                <p><strong>Result:</strong> By Week 10, students have practiced 50+ times—real neural change</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Experience Before Theory</h4>
+                <p><strong>Why:</strong> Abstract concepts are meaningless without grounding in experience</p>
+                <p><strong>Evidence:</strong> Constructivist learning theory—build from concrete to abstract (Piaget)</p>
+                <p><strong>Result:</strong> When theory introduced (Week 11), it explains what students have lived</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Single Organizing Principle</h4>
+                <p><strong>Why:</strong> Fragmented content is hard to retain; integrated frameworks stick</p>
+                <p><strong>Evidence:</strong> Schema theory—organized knowledge easier to retrieve (Bartlett, 1932)</p>
+                <p><strong>Result:</strong> Students remember and can apply years later because it's one coherent system</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Multiple Tools</h4>
+                <p><strong>Why:</strong> Different students face different challenges—one size doesn't fit all</p>
+                <p><strong>Evidence:</strong> Universal Design for Learning—provide multiple means of engagement</p>
+                <p><strong>Result:</strong> Every student finds at least one tool that works for them</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Low-Stakes Assessment</h4>
+                <p><strong>Why:</strong> High-stakes testing increases anxiety, decreases learning</p>
+                <p><strong>Evidence:</strong> Testing effect research—frequent low-stakes testing improves retention</p>
+                <p><strong>Result:</strong> Students focus on learning, not performance anxiety</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Respecting PRF Diversity</h4>
+                <p><strong>Why:</strong> Trying to change values creates resistance and disengagement</p>
+                <p><strong>Evidence:</strong> Self-Determination Theory—autonomy support increases motivation</p>
+                <p><strong>Result:</strong> Students engage deeply because their values are respected</p>
+            </div>
+        </div>
+
+        <h3>What Makes This Particularly Effective for Underprepared Students</h3>
+
+        <div class="mechanism-box">
+            <h3>Accessibility Without Dumbing Down</h3>
+            <p>The course maintains intellectual rigor while being accessible to students with weak preparation:</p>
+            <ul style="text-align: left; margin: 20px 40px;">
+                <li><strong>Concrete starting point:</strong> Work on your own life (everyone has experience with this)</li>
+                <li><strong>Short readings:</strong> 3-5 pages max, with clear reading guides</li>
+                <li><strong>Scaffolded writing:</strong> Journals with prompts, templates, rubrics</li>
+                <li><strong>Repeated practice:</strong> Same pattern every week—predictable structure</li>
+                <li><strong>Multiple entry points:</strong> If one tool doesn't work, try another</li>
+                <li><strong>Growth focus:</strong> Celebrate improvement from your starting point</li>
+            </ul>
+            <p><strong>Result:</strong> Underprepared students can succeed through consistent practice, not just prior academic skills.</p>
+        </div>
+
+        <h3>Transferable Skills Beyond Ethics</h3>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h4>✓ Critical Thinking</h4>
+                <p>Socratic questioning transfers to analyzing any argument or claim</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Emotional Regulation</h4>
+                <p>Mindfulness practice transfers to managing stress, impulse control</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Professional Development</h4>
+                <p>Role-based practice transfers to developing workplace character</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Resilience</h4>
+                <p>Stoic practices transfer to maintaining agency in difficult circumstances</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Relationship Skills</h4>
+                <p>Care ethics transfers to all personal and professional relationships</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>✓ Self-Directed Learning</h4>
+                <p>Meta-constructive capability transfers to continued development in any domain</p>
+            </div>
+        </div>
+
+        <h3>Comparison to Other Approaches</h3>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Approach</th>
+                    <th>Strengths</th>
+                    <th>Limitations</th>
+                    <th>Our Approach Combines</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Traditional Theory Survey</strong></td>
+                    <td>Intellectual depth, exposure to great thinkers</td>
+                    <td>Abstract, passive, no skill development</td>
+                    <td>Uses thinkers as tool-developers, not just content</td>
+                </tr>
+                <tr>
+                    <td><strong>Applied Ethics</strong></td>
+                    <td>Relevant to real issues, engages students</td>
+                    <td>No coherent framework, often just opinion-sharing</td>
+                    <td>Real application but grounded in systematic capability development</td>
+                </tr>
+                <tr>
+                    <td><strong>Virtue Ethics Focus</strong></td>
+                    <td>Character development, not just decision procedures</td>
+                    <td>Often culturally specific, single tradition</td>
+                    <td>Virtue as capability but includes multiple traditions</td>
+                </tr>
+                <tr>
+                    <td><strong>Contemplative Practices</strong></td>
+                    <td>Actual practice, transformative</td>
+                    <td>May lack intellectual rigor, single method</td>
+                    <td>Multiple practices grounded in philosophical traditions and theory</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="key-point">
+            <h4>🎯 The Synthesis</h4>
+            <p>This approach takes the best from each tradition:</p>
+            <ul>
+                <li>Intellectual rigor of traditional philosophy</li>
+                <li>Real-world relevance of applied ethics</li>
+                <li>Character focus of virtue ethics</li>
+                <li>Transformative practice of contemplative approaches</li>
+            </ul>
+            <p><strong>Result:</strong> Rigorous, practical, transformative, and accessible.</p>
+        </div>
+    </div>
+
+    <!-- Demo Section -->
+    <div id="demo" class="content-section">
+        <h2>Interactive Demo: Try the Read-Evaluate-Reconstruct Cycle</h2>
+
+        <div class="hero-box">
+            <h3>Experience the Mechanism</h3>
+            <p>The best way to understand this approach is to <strong>experience it</strong>. Work through this demo to see how the read-evaluate-reconstruct cycle actually feels.</p>
+        </div>
+
+        <h3>Demo Exercise: Examining a Recent Choice</h3>
+
+        <div class="interactive-demo" style="text-align: left;">
+            <h4>Step 1: CREATE SUBSTRATE (Write to create distance)</h4>
+            <p><strong>Instructions:</strong> Think of a choice you made recently that didn't go as well as you'd like. Write 2-3 sentences describing what happened.</p>
+            <textarea id="substrate-text" rows="4" style="width: 100%; padding: 15px; border: 2px solid #667eea; border-radius: 8px; font-size: 1em; margin: 15px 0;"></textarea>
+            
+            <button onclick="analyzeSubstrate()" style="background: #667eea; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; margin: 10px 0;">Proceed to Step 2: READ</button>
+
+            <div id="read-step" style="display: none; margin-top: 30px; padding: 25px; background: #e3f2fd; border-radius: 10px;">
+                <h4>Step 2: READ (Take the reader position)</h4>
+                <p><strong>Instructions:</strong> Now read what you just wrote <em>as if you're watching someone else</em>. What patterns do you notice?</p>
+                
+                <p><strong>Prompts to help you read:</strong></p>
+                <ul>
+                    <li>What was the person trying to do?</li>
+                    <li>What were they feeling?</li>
+                    <li>What assumptions were they making?</li>
+                    <li>What pattern do you see in their behavior?</li>
+                </ul>
+                
+                <p style="margin-top: 20px;"><strong>Your reading:</strong></p>
+                <textarea id="read-text" rows="4" style="width: 100%; padding: 15px; border: 2px solid #2196f3; border-radius: 8px; font-size: 1em; margin: 10px 0;"></textarea>
+                
+                <button onclick="showEvaluate()" style="background: #2196f3; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; margin: 10px 0;">Proceed to Step 3: EVALUATE</button>
+            </div>
+
+            <div id="evaluate-step" style="display: none; margin-top: 30px; padding: 25px; background: #fff3e0; border-radius: 10px;">
+                <h4>Step 3: EVALUATE (Assess what you found)</h4>
+                <p><strong>Instructions:</strong> Based on your reading, evaluate: Did this pattern serve you well? What would work better?</p>
+                
+                <p><strong>Evaluation questions:</strong></p>
+                <ul>
+                    <li>Did the approach achieve what you wanted?</li>
+                    <li>Did it align with your values?</li>
+                    <li>What were the consequences?</li>
+                    <li>What would a wiser response look like?</li>
+                </ul>
+                
+                <p style="margin-top: 20px;"><strong>Your evaluation:</strong></p>
+                <textarea id="evaluate-text" rows="4" style="width: 100%; padding: 15px; border: 2px solid #ff9800; border-radius: 8px; font-size: 1em; margin: 10px 0;"></textarea>
+                
+                <button onclick="showReconstruct()" style="background: #ff9800; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; margin: 10px 0;">Proceed to Step 4: RECONSTRUCT</button>
+            </div>
+
+            <div id="reconstruct-step" style="display: none; margin-top: 30px; padding: 25px; background: #e8f5e9; border-radius: 10px;">
+                <h4>Step 4: RECONSTRUCT (Design your practice)</h4>
+                <p><strong>Instructions:</strong> Based on your evaluation, what ONE thing could you practice this week to handle similar situations better?</p>
+                
+                <p><strong>Be specific:</strong></p>
+                <ul>
+                    <li>Not: "I'll be more patient" (too vague)</li>
+                    <li>But: "When I feel frustration rising, I'll take 3 deep breaths before responding" (concrete)</li>
+                </ul>
+                
+                <p style="margin-top: 20px;"><strong>Your practice commitment:</strong></p>
+                <textarea id="reconstruct-text" rows="3" style="width: 100%; padding: 15px; border: 2px solid #4caf50; border-radius: 8px; font-size: 1em; margin: 10px 0;"></textarea>
+                
+                <button onclick="showCompletion()" style="background: #4caf50; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; margin: 10px 0;">See What You Just Did</button>
+            </div>
+
+            <div id="completion-step" style="display: none; margin-top: 30px; padding: 30px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border: 3px solid #667eea; border-radius: 10px;">
+                <h3 style="color: #667eea; text-align: center;">🎉 You Just Experienced Meta-Construction!</h3>
+                
+                <p style="font-size: 1.2em; margin: 20px 0;"><strong>Here's what happened:</strong></p>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <p><strong>1. You created substrate:</strong> By writing about your choice, you externalized it—made it observable</p>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <p><strong>2. You took the reader position:</strong> At time t+1, you observed your time-t self as if watching someone else—this temporal gap is key</p>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <p><strong>3. You evaluated:</strong> You assessed whether the pattern serves you well—using your PRF to read the substrate</p>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                    <p><strong>4. You designed reconstruction:</strong> You identified a specific practice that will physically rewire your neural patterns through repetition</p>
+                </div>
+                
+                <h4 style="margin-top: 30px; color: #667eea;">This is the mechanism that all philosophical traditions discovered:</h4>
+                <ul style="margin: 15px 0 15px 30px;">
+                    <li>Socrates would have you question your assumptions from Step 2</li>
+                    <li>Buddha would have you observe the emotions involved with mindfulness</li>
+                    <li>Confucius would have you practice new behaviors in your roles</li>
+                    <li>Stoics would have you identify what's in your control</li>
+                    <li>Care ethics would have you consider relational context</li>
+                </ul>
+                
+                <p style="font-size: 1.2em; margin-top: 25px; text-align: center;"><strong>Same mechanism, different applications.</strong></p>
+                
+                <p style="margin-top: 25px; text-align: center;"><strong>In this course, students do this cycle daily for 14 weeks, developing the capability to examine and transform themselves systematically.</strong></p>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 50px;">What Students Would Learn</h3>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h4>Week 1-4</h4>
+                <p><strong>Foundation:</strong> They'd practice this cycle daily on their own choices, establishing the basic pattern</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Weeks 5-10</h4>
+                <p><strong>Tools:</strong> They'd learn five different methods for reading different substrates (beliefs, emotions, actions, control, relationships)</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Weeks 11-12</h4>
+                <p><strong>Integration:</strong> They'd understand this as one unified mechanism and design their personal practice</p>
+            </div>
+
+            <div class="benefit-card">
+                <h4>Weeks 13-14</h4>
+                <p><strong>Continuation:</strong> They'd commit to lifelong practice and understand how to keep developing</p>
+            </div>
+        </div>
+
+        <div class="mechanism-box" style="margin-top: 40px;">
+            <h3>The Result After 14 Weeks</h3>
+            <p style="text-align: center; font-size: 1.2em;">Students don't just <strong>know about</strong> philosophy—they <strong>can do</strong> philosophy.</p>
+            <p style="text-align: center; margin-top: 20px;">They have a <strong>practiced capability</strong> for examining and transforming themselves that will serve them for life.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tab navigation
+    function showTab(tabName, buttonElement) {
+        const sections = document.querySelectorAll('.content-section');
+        sections.forEach(section => section.classList.remove('active'));
+        
+        const buttons = document.querySelectorAll('.tab-button');
+        buttons.forEach(button => button.classList.remove('active'));
+        
+        document.getElementById(tabName).classList.add('active');
+        buttonElement.classList.add('active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Tool explorer
+    function showTool(toolName, element) {
+        const boxes = document.querySelectorAll('[id^="tool-"]');
+        boxes.forEach(box => box.classList.remove('show'));
+        
+        const selectors = document.querySelectorAll('.demo-selector');
+        selectors.forEach(s => s.classList.remove('selected'));
+        
+        document.getElementById('tool-' + toolName).classList.add('show');
+        element.classList.add('selected');
+    }
+
+    // Demo exercise functions
+    function analyzeSubstrate() {
+        const substrateText = document.getElementById('substrate-text').value;
+        if (!substrateText.trim()) {
+            alert('Please describe a recent choice first.');
+            return;
+        }
+        document.getElementById('read-step').style.display = 'block';
+        document.getElementById('read-step').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showEvaluate() {
+        const readText = document.getElementById('read-text').value;
+        if (!readText.trim()) {
+            alert('Please complete your reading first.');
+            return;
+        }
+        document.getElementById('evaluate-step').style.display = 'block';
+        document.getElementById('evaluate-step').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showReconstruct() {
+        const evaluateText = document.getElementById('evaluate-text').value;
+        if (!evaluateText.trim()) {
+            alert('Please complete your evaluation first.');
+            return;
+        }
+        document.getElementById('reconstruct-step').style.display = 'block';
+        document.getElementById('reconstruct-step').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showCompletion(){
+const reconstructText = document.getElementById('reconstruct-text').value;
+if (!reconstructText.trim()) {
+alert('Please complete your reconstruction plan first.');
+return;
+}
+document.getElementById('completion-step').style.display = 'block';
+document.getElementById('completion-step').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+// Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Ethics Course Framework loaded successfully!');
+    });
+</script></body>
 </html>
-
+```
